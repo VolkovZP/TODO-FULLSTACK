@@ -70,7 +70,11 @@ function taskReducer(state = initialState, action) {
       const {
         payload: { id },
       } = action;
-      return state.filter(task => task.id !== id)
+      return {
+        tasks: state.tasks.filter(task => task.id !== Number(id)),
+        isFetching: false,
+
+      }
     }
     case ACTION_TYPES.DELETE_TASK_ERROR: {
       const {

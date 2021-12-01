@@ -1,24 +1,28 @@
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../actions';
+import Task from './Task';
 
-function TaskList (props) {
-  const { tasks, isFetching, error, getTasksAction } = props;
+function TaskList(props) {
+  const { tasks, isFetching, error } = useSelector(({ task }) => task);
+  console.log(tasks)
+  const dispatch = useDispatch()
+  const { deleteTaskRequest, getTasksRequest } = bindActionCreators(ActionCreators, dispatch)
+
   useEffect(() => {
-    getTasksAction();
-  }, [getTasksAction]);
+    getTasksRequest();
+  }, []);
+
+
   return (
     <div>
-      {tasks.map(t => (
-        <div key={t.id}>{(JSON.stringify(t, 4))}</div>
+      {tasks.map(task => (
+        <Task key={task.id} {...task} deleteTaskRequest={deleteTaskRequest} />
       ))}
     </div>
   );
 }
 
-const mapStateToProps = ({ task }) => task;
-const mapDispatchToProps = dispatch => ({
-  getTasksAction: () => dispatch(ActionCreators.getTasksRequest()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
+export default TaskList

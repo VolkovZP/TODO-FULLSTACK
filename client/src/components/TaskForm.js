@@ -1,13 +1,14 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik';
-import { connect } from 'react-redux';
 import * as ActionCreators from '../actions';
 
 const values = { body: '', deadline: '', isDone: false };
 
-function TaskForm (props) {
+function TaskForm() {
+  const dispatch = useDispatch()
   const onSubmit = (values, actions) => {
-    props.createTaskAction(values);
+    dispatch(ActionCreators.createTaskRequest(values))
     actions.resetForm();
   };
   return (
@@ -21,8 +22,5 @@ function TaskForm (props) {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  createTaskAction: values => dispatch(ActionCreators.createTaskRequest(values)),
-});
 
-export default connect(null, mapDispatchToProps)(TaskForm);
+export default TaskForm
