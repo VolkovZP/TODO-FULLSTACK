@@ -45,3 +45,9 @@ export const deleteTaskError = ({ error }) => ({
   type: ACTION_TYPES.DELETE_TASK_ERROR,
   payload: { error },
 });
+
+
+export const clearTaskError = ({ error }) => ({
+  type: ACTION_TYPES.CLEAR_TASK_ERROR,
+  payload: { error },
+})

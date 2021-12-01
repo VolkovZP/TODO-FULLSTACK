@@ -86,6 +86,16 @@ function taskReducer(state = initialState, action) {
         error,
       };
     }
+    case ACTION_TYPES.CLEAR_TASK_ERROR: {
+      const {
+        payload: { error },
+      } = action;
+      return {
+        ...state,
+        isFetching: false,
+        error: null
+      }
+    }
     default:
       return state;
   }
