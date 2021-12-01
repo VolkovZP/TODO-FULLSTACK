@@ -2,7 +2,7 @@ import { put } from 'redux-saga/effects';
 import * as ActionCreators from '../actions';
 import * as API from '../api';
 
-export function * getTasksSaga ({ page, limit }) {
+export function* getTasksSaga({ page, limit }) {
   try {
     const {
       data: { data: tasks },
@@ -14,7 +14,7 @@ export function * getTasksSaga ({ page, limit }) {
   }
 }
 
-export function * createTaskSaga (action) {
+export function* createTaskSaga(action) {
   try {
     const { payload } = action;
     const {
@@ -23,5 +23,16 @@ export function * createTaskSaga (action) {
     yield put(ActionCreators.createTaskSuccess({ task }));
   } catch (error) {
     yield put(ActionCreators.createTaskError({ error }));
+  }
+}
+
+
+export function* deleteTaskSaga(action) {
+  try {
+    const { payload: { id } } = action
+    const { data: { data: taskId } } = yield API.deleteTask({ taskId: id })
+    yield put(ActionCreators.deleteTaskSuccess(taskId))
+  } catch (error) {
+    yield put(ActionCreators.deleteTaskError(error))
   }
 }

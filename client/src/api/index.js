@@ -11,4 +11,7 @@ export const getTasks = ({ userId = 1 } = {}) =>
 export const createTask = ({ userId = 1, ...task } = {}) =>
   http.post(`/users/${userId}/tasks`, task);
 
+
+export const deleteTask = ({ userId = 1, taskId } = {}) => http.delete(`/users/${userId}/tasks/${taskId}`);
+
 export default http;
